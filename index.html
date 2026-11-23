@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #004227;
+            padding: 10px 30px;
+        }
+
+        .nav-headings {
+            display: flex;
+            width: auto;
+            margin-left: auto;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .nav-headings h3 {
+            font-size: 17px;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
+            white-space: nowrap;
+        }
+
+        .nav-headings h3:hover {
+            color: #007900;
+        }
+
+        header>img {
+            width: 85px;
+            flex-shrink: 0;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+        }
+
+        .video-text {
+            position: absolute;
+            top: 50%;
+            right: 8%;
+            transform: translateY(-50%);
+            color: white;
+            text-align: right;
+            width: 45%;
+        }
+
+        .video-text h1 {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .video-text p {
+            font-size: 23px;
+        }
+
+        .video-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .video-buttons button {
+            padding: 13px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: all 0.4s ease;
+        }
+
+        .btn-one {
+            background-color: white;
+            color: #004227;
+        }
+
+        .btn-one:hover {
+            background-color: #004227;
+            color: white;
+        }
+
+        .btn-two {
+            background-color: #004227;
+            color: white;
+        }
+
+        .btn-two:hover {
+            background-color: white;
+            color: #004227;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #004227;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 55px;
+            height: 55px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader h2 {
+            margin-top: 20px;
+            font-size: 30px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #e8eee9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #004227;
+            border-radius: 10px;
+            border: 2px solid #e8eee9;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #007900;
+        }
+
+        .responsibilities-section {
+            padding: 40px 5%;
+            background-color: #f5f8f5;
+        }
+
+        .responsibilities {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .last-card {
+            grid-column: 2;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            text-align: right;
+            border-top: 5px solid #004227;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 60px;
+            color: #004227;
+        }
+
+        .taaruf-section {
+            padding: 60px 5%;
+            background-color: #f5f8f5;
+        }
+
+        .taaruf-card {
+            width: 100%;
+            min-height: 600px;
+            background-color: #004227;
+            border-radius: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+            overflow: hidden;
+        }
+
+        .taaruf-video {
+            width: 50%;
+            height: 450px;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .taaruf-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .taaruf-text {
+            flex: 1;
+            min-width: 0;
+            text-align: right;
+        }
+
+        .taaruf-text h1 {
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 35px;
+        }
+
+        .taaruf-text p {
+            font-size: 23px;
+            line-height: 2.2;
+            color: white;
+        }
+
+        .taaruf-main-heading {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 900;
+            color: #004227;
+            margin-bottom: 40px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-section {
+            background-color: #f5f8f5;
+            padding: 60px 5%;
+        }
+
+        .gallery-heading {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 900;
+            color: #004227;
+            margin-bottom: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 25px 15px;
+            background: linear-gradient(transparent, rgba(0, 66, 39, 0.95));
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .lightbox img {
+            max-width: 75%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        .gallery-prev,
+        .gallery-next {
+            background: #004227;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 25px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .video-gallery-section {
+            background-color: #f5f8f5;
+            padding: 60px 5%;
+        }
+
+        .video-gallery-heading {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 900;
+            color: #004227;
+            margin-bottom: 40px;
+        }
+
+        .video-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .video-card {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 18px;
+            cursor: pointer;
+            background: #004227;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-card:hover video {
+            transform: scale(1.08);
+        }
+
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0, 66, 39, 0.9));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 25px;
+            color: white;
+        }
+
+        .video-overlay span {
+            position: absolute;
+            top: 35%;
+            font-size: 45px;
+            background: #004227;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .video-card:hover .video-overlay span {
+            background: white;
+            color: #004227;
+            transform: scale(1.15);
+        }
+
+        .video-overlay h2 {
+            font-size: 25px;
+        }
+
+        .video-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-lightbox video {
+            width: 80%;
+            max-height: 80%;
+            border-radius: 15px;
+        }
+
+        .video-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            background: #004227;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 23px;
+            font-weight: 900;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: 0.3s ease;
+            z-index: 999;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backToTop:hover {
+            background: #007900;
+            transform: translateY(-5px);
+        }
+
+        .facts-section {
+            background-color: #f5f8f5;
+            padding: 70px 5%;
+        }
+
+        .facts-heading {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 900;
+            color: #004227;
+            margin-bottom: 10px;
+        }
+
+        .facts-subheading {
+            text-align: center;
+            font-size: 22px;
+            color: #555;
+            margin-bottom: 50px;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .fact-card {
+            position: relative;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #004227;
+            overflow: hidden;
+            transition: 0.3s ease;
+        }
+
+        .fact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 66, 39, 0.2);
+        }
+
+        .fact-number {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 35px;
+            font-weight: 900;
+            color: #004227af;
+        }
+
+        .fact-icon {
+            font-size: 55px;
+            margin: 15px 0;
+        }
+
+        .fact-card h2 {
+            color: #004227;
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .fact-card p {
+            color: #555;
+            font-size: 18px;
+            line-height: 2;
+        }
+
+        .footer {
+            width: 100%;
+            background-color: #004227;
+            color: white;
+            text-align: center;
+            padding: 35px 15px;
+            margin-top: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            header {
+                padding: 15px 30px;
+                gap: 25px;
+            }
+
+            header>img {
+                width: 70px;
+            }
+
+            .nav-headings {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px 20px;
+            }
+
+            .nav-headings h3 {
+                font-size: 15px;
+            }
+
+            .video-text {
+                width: 65%;
+                right: 6%;
+            }
+
+            .video-text h1 {
+                font-size: 45px;
+            }
+
+            .video-text p {
+                font-size: 20px;
+            }
+
+            .taaruf-card {
+                gap: 25px;
+                padding: 30px;
+            }
+
+            .taaruf-video {
+                width: 45%;
+            }
+
+            .taaruf-text h1 {
+                font-size: 36px;
+            }
+
+            .taaruf-text p {
+                font-size: 19px;
+            }
+
+            .responsibilities {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .last-card {
+                grid-column: auto;
+            }
+
+            .facts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+            }
+
+            header>img {
+                width: 65px;
+            }
+
+            .nav-headings {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                width: 100%;
+                gap: 5px 15px;
+                text-align: center;
+            }
+
+            .nav-headings h3 {
+                font-size: 14px;
+                margin: 8px 0;
+                white-space: normal;
+            }
+
+            .video-container {
+                height: 430px;
+            }
+
+            .video-text {
+                width: 90%;
+                right: 5%;
+            }
+
+            .video-text h1 {
+                font-size: 36px;
+            }
+
+            .video-text p {
+                font-size: 17px;
+                line-height: 1.8;
+            }
+
+            .video-buttons {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            .video-buttons button {
+                padding: 11px 20px;
+                font-size: 15px;
+            }
+
+            .taaruf-section,
+            .gallery-section,
+            .video-gallery-section {
+                padding: 45px 5%;
+            }
+
+            .taaruf-main-heading,
+            .gallery-heading,
+            .video-gallery-heading,
+            .facts-heading {
+                font-size: 38px;
+            }
+
+            .taaruf-card {
+                flex-direction: column;
+                min-height: auto;
+                padding: 20px;
+                gap: 25px;
+            }
+
+            .taaruf-video {
+                width: 100%;
+                height: 280px;
+            }
+
+            .taaruf-text h1 {
+                font-size: 30px;
+                margin-bottom: 20px;
+            }
+
+            .taaruf-text p {
+                font-size: 17px;
+                line-height: 2;
+            }
+
+            .responsibilities-section {
+                padding: 30px 5%;
+            }
+
+            .section-heading {
+                font-size: 42px;
+            }
+
+            .responsibilities {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .last-card {
+                grid-column: auto;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .card img {
+                height: 220px;
+            }
+
+            .gallery-grid,
+            .video-gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .gallery-item,
+            .video-card {
+                height: 280px;
+            }
+
+            .gallery-caption {
+                font-size: 20px;
+            }
+
+            .facts-section {
+                padding: 45px 5%;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .facts-subheading {
+                font-size: 17px;
+                margin-bottom: 35px;
+            }
+
+            .fact-card {
+                padding: 30px 20px;
+            }
+
+            .fact-card h2 {
+                font-size: 22px;
+            }
+
+            .fact-card p {
+                font-size: 16px;
+            }
+
+            .lightbox {
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .lightbox img {
+                max-width: 70%;
+                max-height: 65%;
+            }
+
+            .gallery-prev,
+            .gallery-next {
+                padding: 10px 13px;
+                font-size: 18px;
+            }
+
+            .lightbox-close,
+            .video-close {
+                top: 10px;
+                right: 15px;
+                font-size: 40px;
+            }
+
+            .video-lightbox video {
+                width: 95%;
+                max-height: 65%;
+            }
+
+            #backToTop {
+                width: 45px;
+                height: 45px;
+                bottom: 18px;
+                right: 18px;
+                font-size: 21px;
+            }
+
+            .footer {
+                padding: 25px 15px;
+                font-size: 14px;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .nav-headings {
+                gap: 3px 8px;
+            }
+
+            .nav-headings h3 {
+                font-size: 12px;
+            }
+
+            .video-container {
+                height: 380px;
+            }
+
+            .video-text h1 {
+                font-size: 30px;
+            }
+
+            .video-text p {
+                font-size: 15px;
+            }
+
+            .video-buttons button {
+                padding: 9px 13px;
+                font-size: 13px;
+            }
+
+            .taaruf-video {
+                height: 220px;
+            }
+
+            .gallery-item,
+            .video-card {
+                height: 230px;
+            }
+
+            .gallery-caption {
+                font-size: 17px;
+            }
+
+            .section-heading {
+                font-size: 35px;
+            }
+
+            .footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <h2>مقامی حکومت</h2>
+        <p>Loading...</p>
+    </div>
+
+    <header>
+        <img src="images/sindh logo.png" alt="Sindh Logo">
+
+        <div class="nav-headings">
+            <h3 onclick="document.getElementById('one').scrollIntoView({behavior: 'smooth'})">تعارف</h3>
+            <h3 onclick="document.getElementById('two').scrollIntoView({behavior: 'smooth'})">ذمہ داریاں</h3>
+            <h3 onclick="document.getElementById('three').scrollIntoView({behavior: 'smooth'})">تصویری گیلری</h3>
+            <h3 onclick="document.getElementById('four').scrollIntoView({behavior: 'smooth'})">وڈیو گیلری</h3>
+            <h3 onclick="document.getElementById('five').scrollIntoView({behavior: 'smooth'})">اہم معلومات</h3>
+        </div>
+    </header>
+
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="videos/Karachi Local Government.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay"></div>
+
+        <div class="video-text">
+            <h1>مقامی حکومت</h1>
+            <p>کراچی کی مقامی حکومت کی ذمہ داریاں اور عوامی خدمات</p>
+
+            <div class="video-buttons">
+                <button class="btn-one"
+                    onclick="document.getElementById('two').scrollIntoView({behavior: 'smooth'})">ذمہ داریاں</button>
+                <button class="btn-two"
+                    onclick="document.getElementById('one').scrollIntoView({behavior: 'smooth'})">تعارف</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="taaruf-section reveal" id="one">
+        <h1 class="taaruf-main-heading">تعارف</h1>
+
+        <div class="taaruf-card">
+            <div class="taaruf-video">
+                <video autoplay muted loop playsinline>
+                    <source src="videos/shadmantownvid.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="taaruf-text">
+                <h1>مقامی حکومت کسے کہتے ہیں؟</h1>
+
+                <p>
+                    مقامی حکومت ایک ایسا نظام ہے جس کے ذریعے کسی شہر، قصبے یا علاقے کے لوگ اپنے مقامی مسائل حل کرنے اور
+                    بنیادی سہولیات فراہم کرنے کے لیے اپنے نمائندے منتخب کرتے ہیں۔ مقامی حکومت صفائی، پانی، سڑکوں، اسٹریٹ
+                    لائٹس اور دیگر عوامی سہولیات کی فراہمی میں اہم کردار ادا کرتی ہے۔
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="responsibilities-section reveal" id="two">
+        <h1 class="section-heading">ذمہ داریاں</h1>
+
+        <div class="responsibilities">
+            <div class="card">
+                <img src="images/trash pick pic.jpg">
+                <h2>صفائی اور نکاسی آب</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ گلیوں اور محلوں کی صفائی کروائے، کوڑا کرکٹ اٹھانے کا انتظام
+                    کرے اور سیوریج کے نظام کو فعال رکھے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/clean water.jpg">
+                <h2>پینے کے صاف پانی کی فراہمی</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ شہریوں کو پینے کے صاف پانی کی فراہمی کو یقینی بنائے اور واٹر
+                    سپلائی لائنوں کی مرمت کروائے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/road making pic.jpg">
+                <h2>سڑکوں اور گلیوں کی تعمیر</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ مقامی سڑکوں، گلیوں، نالیوں اور چھوٹے پلوں کی تعمیر و مرمت کا
+                    کام کروائے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/street lights pic.jpg">
+                <h2>اسٹریٹ لائٹس اور پارکس</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ گلیوں اور سڑکوں پر اسٹریٹ لائٹس کا انتظام کرے اور عوامی پارکس
+                    و کھیل کے میدانوں کی دیکھ بھال کرے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/parhai.jpg">
+                <h2>بنیادی صحت اور تعلیم</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ مقامی سطح پر ڈسپنسریوں، بنیادی مراکزِ صحت اور پرائمری اسکولوں
+                    کے انتظامات کی نگرانی کرے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/health depart pic.jpg">
+                <h2>پیدائش و اموات کا اندراج</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ یونین کونسل کی سطح پر پیدائش، وفات، شادی اور طلاق کا ریکارڈ
+                    رکھے اور سرٹیفکیٹس جاری کرے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/images.jpg">
+                <h2>مارکیٹوں اور منڈیوں کا انتظام</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ مقامی منڈیوں، مویشی منڈیوں اور مذبح خانوں کو منظم کرے اور
+                    صفائی و نرخوں کی نگرانی کرے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/thela.jpg">
+                <h2>تجاوزات کا خاتمہ</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ سرکاری جگہوں اور سڑکوں سے غیر قانونی قبضے اور تجاوزات ختم
+                    کروائے۔</p>
+            </div>
+
+            <div class="card">
+                <img src="images/emergency.jpg">
+                <h2>ہنگامی حالات میں امداد</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ قدرتی آفات، بارشوں یا کسی بھی ہنگامی صورتحال میں عوام کی مدد
+                    اور بچاؤ کے کاموں میں حصہ لے۔</p>
+            </div>
+
+            <div class="card last-card">
+                <img src="images/tax.jpg">
+                <h2>مقامی ٹیکسوں کی وصولی</h2>
+                <p>مقامی حکومت کی یہ بھی ذمہ داری ہے کہ وہ علاقے کے ترقیاتی کاموں کے لیے مقررہ بلدیاتی ٹیکس اور فیسیں
+                    جمع کرے۔</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery-section reveal" id="three">
+        <h1 class="gallery-heading">تصویری گیلری</h1>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/park.jpg" alt="پارک">
+                <div class="gallery-caption">پارکوں کی دیکھ بھال</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/tax.jpg" alt="ٹیکس">
+                <div class="gallery-caption">ٹیکس کی وصولی</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/health pic.webp" alt="صحت">
+                <div class="gallery-caption">صحت کی سہولیات</div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="images/road making pic.jpg" alt="سڑکیں">
+                <div class="gallery-caption">سڑکوں کی تعمیر</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeGallery()">&times;</span>
+        <button class="gallery-prev" onclick="changeImage(-1)">&#10094;</button>
+        <img id="lightbox-img">
+        <button class="gallery-next" onclick="changeImage(1)">&#10095;</button>
+    </div>
+
+    <section class="video-gallery-section reveal" id="four">
+        <h1 class="video-gallery-heading">وڈیو گیلری</h1>
+
+        <div class="video-gallery-grid">
+            <div class="video-card" onclick="openVideo(0)">
+                <video muted preload="metadata">
+                    <source src="videos/pakistan.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <span>▶</span>
+                    <h2>پاکستان</h2>
+                </div>
+            </div>
+
+            <div class="video-card" onclick="openVideo(1)">
+                <video muted preload="metadata">
+                    <source src="videos/cutti_hui_video.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <span>▶</span>
+                    <h2>شہری ترقی</h2>
+                </div>
+            </div>
+
+            <div class="video-card" onclick="openVideo(2)">
+                <video muted preload="metadata">
+                    <source src="videos/pm house.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <span>▶</span>
+                    <h2>وزیر اعظم ہاؤس</h2>
+                </div>
+            </div>
+
+            <div class="video-card" onclick="openVideo(3)">
+                <video muted preload="metadata">
+                    <source src="videos/shadmantownvid.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <span>▶</span>
+                    <h2>شادمَن ٹاؤن</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="video-lightbox" id="videoLightbox">
+        <span class="video-close" onclick="closeVideo()">&times;</span>
+        <video id="popupVideo" controls></video>
+    </div>
+
+    <section class="facts-section reveal" id="five">
+        <h1 class="facts-heading">اہم معلومات</h1>
+        <p class="facts-subheading">مقامی حکومت کے بارے میں چند دلچسپ حقائق</p>
+
+        <div class="facts-grid">
+            <div class="fact-card">
+                <div class="fact-number">01</div>
+                <div class="fact-icon">🏙️</div>
+                <h2>شہری سہولیات</h2>
+                <p>مقامی حکومت شہریوں کو بنیادی سہولیات فراہم کرنے میں اہم کردار ادا کرتی ہے۔</p>
+            </div>
+
+            <div class="fact-card">
+                <div class="fact-number">02</div>
+                <div class="fact-icon">🌳</div>
+                <h2>پارکوں کی دیکھ بھال</h2>
+                <p>عوامی پارکوں اور تفریحی مقامات کی دیکھ بھال بھی مقامی خدمات کا حصہ ہے۔</p>
+            </div>
+
+            <div class="fact-card">
+                <div class="fact-number">03</div>
+                <div class="fact-icon">💡</div>
+                <h2>اسٹریٹ لائٹس</h2>
+                <p>سڑکوں پر روشنی کا انتظام شہریوں کی سہولت اور حفاظت میں مدد دیتا ہے۔</p>
+            </div>
+
+            <div class="fact-card">
+                <div class="fact-number">04</div>
+                <div class="fact-icon">🚮</div>
+                <h2>صفائی کا نظام</h2>
+                <p>کچرے کو جمع کرنا اور مناسب طریقے سے ٹھکانے لگانا صاف ماحول کے لیے ضروری ہے۔</p>
+            </div>
+
+            <div class="fact-card">
+                <div class="fact-number">05</div>
+                <div class="fact-icon">🛣️</div>
+                <h2>سڑکوں کی دیکھ بھال</h2>
+                <p>مقامی ادارے اپنے دائرۂ اختیار میں سڑکوں اور گلیوں کی دیکھ بھال کرتے ہیں۔</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer reveal">
+        <p>© 2026 | Designed & Developed by Muhammad Ali Tayyab<br> VII Green</p>
+    </footer>
+
+    <script>
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader")
+
+            loader.style.opacity = "0"
+
+            setTimeout(function () {
+                loader.style.display = "none"
+            }, 500)
+        })
+
+        let elements = document.querySelectorAll(".reveal")
+
+        let lastScrollY = window.scrollY
+        let scrollDirection = "down"
+
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > lastScrollY) {
+                scrollDirection = "down"
+            } else if (window.scrollY < lastScrollY) {
+                scrollDirection = "up"
+            }
+
+            lastScrollY = window.scrollY
+        }, { passive: true })
+
+        let observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting && scrollDirection === "down") {
+                    entry.target.classList.add("active")
+                }
+
+                if (!entry.isIntersecting && scrollDirection === "up" && entry.boundingClientRect.top > window.innerHeight) {
+                    entry.target.classList.remove("active")
+                }
+            })
+        }, {
+            threshold: 0
+        })
+
+        elements.forEach(function (element) {
+            observer.observe(element)
+        })
+
+        let galleryImages = [
+            "images/park.jpg",
+            "images/tax.jpg",
+            "images/health pic.webp",
+            "images/road making pic.jpg"
+        ]
+
+        let currentImage = 0
+
+        let galleryItems = document.querySelectorAll(".gallery-item")
+
+        galleryItems.forEach(function (item, index) {
+            item.addEventListener("click", function () {
+                currentImage = index
+                document.getElementById("lightbox-img").src = galleryImages[currentImage]
+                document.getElementById("lightbox").style.display = "flex"
+            })
+        })
+
+        function closeGallery() {
+            document.getElementById("lightbox").style.display = "none"
+        }
+
+        function changeImage(direction) {
+            currentImage = currentImage + direction
+
+            if (currentImage >= galleryImages.length) {
+                currentImage = 0
+            }
+
+            if (currentImage < 0) {
+                currentImage = galleryImages.length - 1
+            }
+
+            document.getElementById("lightbox-img").src = galleryImages[currentImage]
+        }
+
+        let videoFiles = [
+            "videos/pakistan.mp4",
+            "videos/cutti_hui_video.mp4",
+            "videos/pm house.mp4",
+            "videos/shadmantownvid.mp4"
+        ]
+
+        function openVideo(index) {
+            let popup = document.getElementById("videoLightbox")
+            let video = document.getElementById("popupVideo")
+
+            video.src = videoFiles[index]
+            popup.style.display = "flex"
+            video.play()
+        }
+
+        function closeVideo() {
+            let popup = document.getElementById("videoLightbox")
+            let video = document.getElementById("popupVideo")
+
+            video.pause()
+            video.src = ""
+            popup.style.display = "none"
+        }
+
+        let backToTop = document.getElementById("backToTop")
+
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTop.classList.add("show")
+            } else {
+                backToTop.classList.remove("show")
+            }
+        })
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
+        }
+    </script>
+</body>
+
+</html>
